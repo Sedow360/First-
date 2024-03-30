@@ -22,6 +22,8 @@ int main()
     printf("Enter the limit:");
     int l=0;
     scanf("%d", &l);
-    printf("%d", fibonacci(l));
+    for (int i=1; i<=l; i++){
+    printf("%d ", fibonacci(i));
+    }
     return 0;
 }
