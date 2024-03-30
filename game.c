@@ -22,15 +22,33 @@ int main()
         printf("Turn %d starts!!\n", turn);
         for (int i=1; i<=p; i++)
         {
-            printf("Will player %d add or subtract a number from the starting value?\n", i);
-            int c=0;scanf("%d", &c);
+            
+            for (int i = 0; ; )
+            { int check=start;
+                printf("Will player %d add or subtract 1 from the starting value?\n", i);
+            char c;scanf("%c", &c);
+             switch (c)
+             {
+             case '+': start++;
+                break;
 
-             start+=c;
+             case '-': start--;
+                break;
+
+             default:printf("Blud, I told either add or subtract bruh..No need of showing your proficiency in maths here...\n Retry RN!!!\n");
+                break;
+             }
+             if (start!=check)
+             {
+                break;
+             }
+             
+            }
 
              if (start%3==0)
              {
                 printf("Player %d won!!!\n", i);
-                break;;
+                break;
              }
               
         }
