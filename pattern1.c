@@ -2,7 +2,6 @@
 
 int increasing(int l)
 {
-   
         for( int h=1; h<=l; h++)
         {
             if (h == l && h%l == 0)
@@ -14,7 +13,6 @@ int increasing(int l)
                 printf("  ");
             }
         }
-    
     return 0;
 }
 
@@ -30,21 +28,12 @@ int main()
         int c=0;
         if (n%4 != 0)
         {
-            
             increasing((n%4));
-           
-        
-           
         }
         if (n%4 == 0)
         {
             printf("  ");printf("*\n");
-            
         }
-       
-        
-
     }
-   
     return 0;
 }
