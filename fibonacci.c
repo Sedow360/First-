@@ -19,11 +19,22 @@ int fibonacci(int n)
 
 int main()
 {
-    printf("Enter the limit:");
+    /*printf("Enter the limit:");
     int l=0;
     scanf("%d", &l);
-    for (int i=1; i<=l; i++){
-    printf("%d ", fibonacci(i));
+    for (int i=1; i<=l; i++)
+    {
+        printf("%d ", fibonacci(i));
+    }*/
+
+    int n, n1=0, n2=1, s=0; printf("Enter the limit: "); scanf("%d", &n);
+    for (int i=0; i<n; i++)  //without recursion
+    {
+        printf("%d ", n2);
+        s=n1+n2;
+        n1=n2; 
+        n2=s;
     }
+
     return 0;
 }
