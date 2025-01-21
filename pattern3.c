@@ -1,44 +1,4 @@
 #include <stdio.h>
-#include<stdlib.h>
-#include<string.h>
-
-/*int dec(int n, int d, int step)
-{
-    if(n==0) {return step;}
-    int max, temp, n1=n-d;
-    temp=n1;
-    max=n1%10;
-    while (temp!=0)
-    {
-        if(temp%10>max)
-        {
-            max=temp%10;
-        }
-        d=temp%10; temp=(temp-d)/10;
-    }
-    step++;
-    return dec(n1, max, step);
-}
-int main()
-{
-    int n, step=0, d, max;
-    printf("Enter the number: ");
-    scanf("%d", &n);
-    /*while (n!=0)
-    {
-        max=n%10;
-        while (n!=0)
-        {
-            d=n%10;
-            if(max<d) {max=d;}
-            n=n/10;
-        }
-        n=n-max;
-        step++;
-    } 
-    printf("The minimum no. of steps required are: %d.\n", dec(n, n%10, 0));
-    return 0;
-}*/
 
 int main()
 {
@@ -74,7 +34,6 @@ int main()
         }
         printf("\n");
     }
-    
     
     return 0;
 }

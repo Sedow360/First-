@@ -1,14 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct Node
+typedef struct node 
 {
     int data;
-    struct Node* next;
-};
+    struct node* next;
+}Node;
 
-struct Node* head = NULL;
-void ins();
+Node* head = NULL;
 void insp();
 void search();
 void del();
@@ -18,23 +17,22 @@ int main()
 {
     int ch;
 
-    printf("1: Insert an element in the end\n2: Insert at a given position\n3: Delete an element\n4: Search for an element\n5: Display the list\n6: End operation\n"); int n, i, x;
+    printf("1: Insert at a given position\n2: Delete an element\n3: Search for an element\n4: Display the list\n5: End operation\n"); int n, i, x;
 
     while (1)
     {
         printf("Enter your choice: ");
         scanf("%d", &ch);
         
+        if (ch == 5) {break;}
         switch(ch)
         {
-            case 1: ins(); break;
-            case 2: insp(); break;
-            case 3: del(); break;
-            case 4: search(); break;
-            case 5: print(); break;
+            case 1: insp(); break;
+            case 2: del(); break;
+            case 3: search(); break;
+            case 4: print(); break;
+            default: printf("Invalid choice!\n");
         }
-
-        if (ch == 6) {break;}
     }
 
     printf("Thanks!\n");
@@ -42,150 +40,239 @@ int main()
     return 0;
 }
 
-void ins()
-{
-    printf("Enter the element: "); int n;
-    scanf("%d", &n);
-    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
-    temp->data = n;
-    temp->next = NULL;
 
-    if (head == NULL) {head = temp; return;}
+// void insp()
+// {
+//     int n, p, c=1;
+//     printf("Enter the element to be inserted and its position: ");
+//     scanf("%d%d", &n, &p);
 
-    struct Node* s = head;
+//     struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+//     temp->data = n;
 
-    while (s->next != NULL)
-    {
-        s = s->next;
-    }
+//     if (head == NULL || p == 1)
+//     {
+//         temp->next = head;
+//         head = temp;
+//     }
+//     else
+//     {
+//         struct Node* prev = head;
+//         struct Node* nex = prev->next;
+//         int possible = 1;
+        
+//         while (c<p || nex->next != NULL)
+//         {
+//             if (prev->next == NULL)
+//             {
+//                 possible = 0;
+//                 printf("Out of bounds!\n");
+//                 break;
+//             }
+//             else if (c==p) {break;}
+//             prev = nex;
+//             nex = nex->next;
+//             c++;
+//         }
 
-    s->next = temp;
-}
+//         if (possible)
+//         {
+//             prev->next = temp;
+//             temp->next = nex;
+//         }
+//     }
+// }
+
+// void del()
+// {
+//     if (head == NULL)
+//     {
+//         printf("No list is created!\n");
+//         return;
+//     }
+//     else
+//     {
+//         int n; printf("Enter the element to be deleted :");
+//         scanf("%d", &n);
+
+//         if (head->data == n)
+//         {
+//             struct Node* t = head;
+//             head = head->next;
+//             free(t);
+//         }
+//         else
+//         {
+//             struct Node* p = head, *t = head->next, *nex;
+//             nex = t->next;
+
+//             while (t->data != n)
+//             {
+//                 p = t;
+//                 t = nex;
+//                 nex = nex->next;
+//             }
+
+//             p->next = nex;
+//             free(t);
+//         }
+//     }
+// }
+
+// void search()
+// {
+//     if (head ==  NULL)
+//     {
+//         printf("No list is created!\n");
+//         return;
+//     }
+//     else
+//     {
+//         int n, p=1, is_absent=1; printf("Enter the element to be searched: ");
+//         scanf("%d", &n);
+//         struct Node* t = head;
+
+//         while (t->next != NULL)
+//         {
+//             if (t->data == n)
+//             {
+//                 is_absent = 0;
+//                 printf("The element '%d' is at index %d.\n", n, p);
+//                 break;
+//             }
+//             t = t->next;
+//             p++;
+//         }
+
+//         if (is_absent)
+//         {
+//             printf("The element is not present in the list!\n");
+//         }
+//     }
+// }
+
+// void print()
+// {
+//     if (head == NULL)
+//     {
+//         printf("No list is created!\n");
+//         return;
+//     }
+
+//     struct Node* temp = head;
+//     printf("The list is: ");
+//     while (temp != NULL)
+//     {
+//         printf("%d -> ", temp->data);
+//         temp = temp->next;
+//     }
+//     printf("NULL\n");
+// }
 
 void insp()
 {
-    int n, p, c=1;
-    printf("Enter the element to be inserted and its position: ");
+    int n, p;
+    printf("Enter the element and the position it should be inserted at: ");
     scanf("%d%d", &n, &p);
 
-    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+    Node *temp =(Node*)calloc(1, sizeof(Node));
+
     temp->data = n;
 
-    if (head == NULL || p == 1)
+    if (p == 1)
     {
         temp->next = head;
         head = temp;
     }
-    else
+    else 
     {
-        struct Node* prev = head;
-        struct Node* nex = prev->next;
-        int possible = 1;
-        
-        while (c<p || nex->next != NULL)
+        int i = 1;
+
+        Node *ptr = head;
+
+        while (i<p && ptr != NULL)
         {
-            if (prev->next == NULL)
+            if (ptr->next == NULL)
             {
-                possible = 0;
-                printf("Out of bounds!\n");
                 break;
             }
-            else if (c==p) {break;}
-            prev = nex;
-            nex = nex->next;
-            c++;
+
+            ptr = ptr->next;
+            i++;
         }
 
-        if (possible)
-        {
-            prev->next = temp;
-            temp->next = nex;
-        }
+        temp->next = ptr->next;
+        ptr->next = temp;
     }
 }
 
 void del()
 {
-    if (head == NULL)
+    int n; printf("Enter the element to be deleted: ");
+    scanf("%d", &n);
+
+    Node *ptr = head;
+
+    if (ptr->data == n)
     {
-        printf("No list is created!\n");
-        return;
+        head = ptr->next;
+        free(ptr);
     }
     else
     {
-        int n; printf("Enter the element to be deleted :");
-        scanf("%d", &n);
-
-        if (head->data == n)
+        Node *temp;
+        while (ptr->data != n)
         {
-            struct Node* t = head;
-            head = head->next;
-            free(t);
-        }
-        else
-        {
-            struct Node* p = head, *t = head->next, *nex;
-            nex = t->next;
-
-            while (t->data != n)
+            if (ptr == NULL)
             {
-                p = t;
-                t = nex;
-                nex = nex->next;
+                printf("Out of bounds!\n"); return;
             }
 
-            p->next = nex;
-            free(t);
+            temp = ptr;
+            ptr = ptr->next;
         }
+
+        temp->next = ptr->next;
+        free(ptr);
     }
 }
 
 void search()
 {
-    if (head ==  NULL)
-    {
-        printf("No list is created!\n");
-        return;
-    }
-    else
-    {
-        int n, p=1, is_absent=1; printf("Enter the element to be searched: ");
-        scanf("%d", &n);
-        struct Node* t = head;
+    int n; printf("Enter the element to be searched: ");
+    scanf("%d", &n);
 
-        while (t->next != NULL)
+    Node *ptr = head;
+    int p = 1;
+
+    while (ptr->next != NULL)
+    {
+        if (ptr->data == n)
         {
-            if (t->data == n)
-            {
-                is_absent = 0;
-                printf("The element '%d' is at index %d.\n", n, p);
-                break;
-            }
-            t = t->next;
-            p++;
+            printf("The element %d is at index no. %d.\n", n, p);
+            return;
+        }
+        if (ptr->next == NULL)
+        {
+            printf("Element %d was not found!\n", n);
+            return;
         }
 
-        if (is_absent)
-        {
-            printf("The element is not present in the list!\n");
-        }
+        ptr = ptr->next; p++;
     }
 }
 
 void print()
 {
-    if (head == NULL)
-    {
-        printf("No list is created!\n");
-        return;
-    }
+    print("The list is as follows:\n");
+    Node *ptr = head;
 
-    struct Node* temp = head;
-    printf("The list is: ");
-    while (temp != NULL)
+    while (ptr != NULL)
     {
-        printf("%d -> ", temp->data);
-        temp = temp->next;
+        printf("%d -> ", ptr->data);
+
+        ptr = ptr->next;
     }
+    
     printf("NULL\n");
 }
