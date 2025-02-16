@@ -1,50 +1,101 @@
-#include<stdlib.h>
 #include<stdio.h>
-
-void merge(int *nums1, int nums1s, int m, int *nums2, int nums2s, int n)
+#include<stdlib.h>
+/*
+typedef struct
 {
-    int a[m+n];
+    int min, max;
+}minMax;
 
-    int i = 0, j = 0, k = 0;
-
-    while (i<m && j<n)
+minMax findMinMax(int a[], int lb, int ub)
+{
+    minMax result, left, right;
+    if (lb == ub)
     {
-        if (*(nums1+i) < *(nums2+j))
-        {
-            a[k++] = (*(nums1+i)); i++;
-        }
-        else
-        {
-            a[k++] = (*(nums2+j)); j++;
-        }
+        result.min = result.max = a[lb];
+        return result;
     }
 
-    while (i<m)
-    {a[k++] = (*(nums1+i)); i++;}
+    if (lb + 1 == ub)
+    {
+        result.min = (a[lb] < a[ub]) ? a[lb] : a[ub];
+        result.max = (a[lb] > a[ub]) ? a[lb] : a[ub];
+        return result;
+    }
 
-    while (j<n)
-    {a[k++] = (*(nums2+j)); j++;}
-    printf("\n");
-    for (int x = 0; x < m+n; x++)
-    {printf("%d ", a[x]);}
-    printf("\n");
+    int mid = lb + ((ub-lb)/2);
+    left = findMinMax(a, lb, mid);
+    right = findMinMax(a, mid+1, ub);
+
+    result.min = (left.min < right.min) ? left.min : right.min;
+    result.max = (left.max > right.max) ? left.max : right.max;
+    return result;
 }
 
 int main()
 {
-    int n1s, n2s;
-    scanf("%d%d", &n1s, &n2s);
+    int a[] = {65};
+    int l = sizeof(a)/sizeof(a[0]);
 
-    int *n1, *n2;
-    printf("Enter array 1:\n");
-    for (int i = 0; i<n1s; i++)
-    {scanf("%d", n1+i);}
-    printf("Enter array 2:\n");
-    for (int j = 0; j<n2s; j++)
-    {scanf("%d", n2+j);}
-    printf("Enter limits: ");
-    int m, n;
-    scanf("%d%d", &m, &n);
+    minMax result = findMinMax(a, 0, l-1);
 
-    merge(n1, n1s, m, n2, n2s, n);
+    printf("Min: %d, Max: %d\n", result.min, result.max);
+    return 0;
+}
+*/
+
+
+int calcCost(int dim[], int i, int j, int** mem)
+{
+    if (i == j)
+    return 0;
+
+    if (mem[i][j] != -1)
+    return mem[i][j];
+
+    int minCost = __INT_MAX__, cost = 0;
+
+    for (int k = i; k<j; k++)
+    {
+        cost = calcCost(dim, i, k, mem) + calcCost(dim, k+1, j, mem) + dim[i-1]*dim[k]*dim[j];
+
+        if (cost < minCost)
+        minCost = cost;
+    }
+
+    mem[i][j] = minCost;
+    return minCost;
+}
+
+int memo(int dim[], int n)
+{
+    int** mem = (int**)malloc(n * sizeof(int*));
+
+    for (int i = 0; i<n; i++)
+    {
+        mem[i] = (int*)malloc(n * sizeof(int));
+        for (int j = 0; j<n; j++)
+        {
+            mem[i][j] = -1;
+        }
+    }
+
+    int cost = calcCost(dim, 1, n-1, mem);
+
+    for (int i =0; i<n; i++)
+    {
+        free(mem[i]);
+    }
+    free(mem);
+
+    return cost;
+}
+
+int main()
+{
+    int dim[] = {40, 20, 30, 10};
+    int mat = sizeof(dim)/sizeof(dim[0]) -1;
+
+    printf("%d", memo(dim, mat +1));
+
+    return 0;
 }
