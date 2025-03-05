@@ -101,7 +101,7 @@ void dfs(struct graphMatrix* graph, int start)
 
     stack[rear++] = start;
 
-    /*while (rear > 0) 
+    while (rear > 0) 
     {
         int temp = stack[--rear]; // Pop the top vertex from the stack
 
@@ -117,20 +117,6 @@ void dfs(struct graphMatrix* graph, int start)
                 {
                     stack[rear++] = j; // Push the unvisited vertex onto the stack
                 }
-            }
-        }
-    }*/
-    while(rear>0)
-    {
-        int temp = stack[--rear];
-        visited[temp] = 1;
-        printf("Visited %d\n", temp);
-
-        for (int j = 0; j<graph->numVertices; j++)
-        {
-            if (graph->gm[temp][j] == 1 && visited[j] == 0 && check(stack, j, graph->numVertices == 0))
-            {
-                stack[rear++] = j;
             }
         }
     }
